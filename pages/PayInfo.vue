@@ -1,0 +1,13 @@
+<template>
+    <div>
+        <div>
+            <span>카드번호</span>
+        </div>
+        <div>
+            <input>
+            <input>
+            <input>
+            <input>
+        </div>
+    </div>
+</template>
