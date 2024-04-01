@@ -1,21 +1,28 @@
 <template>
     <div>
-        <div>
+        <a-space direction="vertical">
             <div>
                 <span>이름</span>
-                <input type="text">
+                <a-input type="text"></a-input>
             </div>
             <div>
                 <span>연락처</span>
-                <input type="text">
+                <a-input type="text"></a-input>
             </div>
             <div>
                 <span>주소</span>
-                <button>우편번호</button>
+                <a-button type="primary">우편번호</a-button>
             </div>
-            <input><br>
-            <input>
-        </div>
-        <NuxtLink to="/PayInfo">다음</NuxtLink>
+            <a-input></a-input>
+            <a-input></a-input>
+            <div>
+                <a-button>
+                    <NuxtLink to="/">이전</NuxtLink>
+                </a-button>
+                <a-button>
+                    <NuxtLink to="/PayInfo">다음</NuxtLink>
+                </a-button>
+            </div>
+        </a-space>
     </div>
 </template>
