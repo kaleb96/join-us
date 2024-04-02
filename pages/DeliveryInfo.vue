@@ -1,13 +1,20 @@
 <script setup lang="ts">
 
+onMounted(()=> {
+    const script = document.createElement('script');
+    script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+    document.head.appendChild(script);
+})
+
 //states
 const name = ref('');
 const ctn = ref('');
+const roadAddress = ref('');
 const zonecode = ref('');
-const detailAddress = ref('');
 const isNameChecked = ref(true);
 const isCtnChecked = ref(true);
-const isScriptLoaded = ref(false);
+const router = useRouter();
+
 //functions
 //이름 유효성 검사
 const handleName = () => {
@@ -39,7 +46,27 @@ const handleCtn = () => {
     return isCtnChecked.value = true; //success
 }
 
+//Daum 우편번호 검색
+const postOpen = () => {
 
+  new daum.Postcode({
+    
+    oncomplete: (data: any) => {
+    
+        if(data) {
+            roadAddress.value = data.roadAddress;
+            zonecode.value = data.zonecode;
+        }
+    }
+  }).open();
+}
+
+const goNext = () => {
+
+    if(roadAddress.value && zonecode.value && isNameChecked && isCtnChecked) {
+        router.push('/PayInfo');
+    }
+}
 </script>
 
 <template>
@@ -57,17 +84,13 @@ const handleCtn = () => {
             </div>
             <div>
                 <span>주소</span>
-                <button>우편번호</button>
+                <a-button @click="postOpen">우편번호</a-button>
+                <a-input type="text" readonly v-model:value="roadAddress"></a-input>
                 <a-input type="text" readonly v-model:value="zonecode"></a-input>
-                <a-input type="text" readonly v-model:value="detailAddress"></a-input>
             </div>
             <div>
-                <a-button>
-                    <NuxtLink to="/">이전</NuxtLink>
-                </a-button>
-                <a-button>
-                    <NuxtLink to="/PayInfo">다음</NuxtLink>
-                </a-button>
+                <a-button><Nuxt-link to='/'>이전</Nuxt-link></a-button>
+                <a-button @click="goNext">다음</a-button>
             </div>
         </a-space>
     </div>
