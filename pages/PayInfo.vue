@@ -1,23 +1,22 @@
 <script setup lang="ts">
 
-const cardNo = reactive({
+//stores
+import { useUsers } from '@/stores/users'
+const store = useUsers();
+const { cardInfo, checkInfo } = store;
 
-    no1 : '',
-    no2 : '',
-    no3 : '',
-    no4 : '',
-    result : false,
-    valid : false
-})
+//state
+const router = useRouter();
 
+//functions
 //input Data 검증
 const handleInput = () => {
 
     checkRegex();
-    if(cardNo.result === true) { //input 확인 완료
+    if(checkInfo.card === true) { //input 확인 완료
         
-        let num = `${cardNo.no1}${cardNo.no2}${cardNo.no3}${cardNo.no4}`;
-        cardNo.valid = calculation(num);    
+        let num = `${cardInfo.no1}${cardInfo.no2}${cardInfo.no3}${cardInfo.no4}`;
+        checkInfo.cardValid = calculation(num);    
     }    
 }
 
@@ -26,12 +25,12 @@ const checkRegex = () => {
 
     let regex = /^\d{4}$/; //정규식
     
-    if(regex.test(cardNo.no1) && regex.test(cardNo.no2) //모든 input값에 4자리인지 체크
-    && regex.test(cardNo.no3) && regex.test(cardNo.no4)) { 
-        cardNo.result = true; //success
+    if(regex.test(cardInfo.no1) && regex.test(cardInfo.no2) //모든 input값에 4자리인지 체크
+    && regex.test(cardInfo.no3) && regex.test(cardInfo.no4)) { 
+        checkInfo.card = true; //success
 
     } else { //fail
-        cardNo.result = false;
+        checkInfo.card = false;
 
     }
 }
@@ -60,6 +59,15 @@ const calculation = (num: string) => {
     return sum % 10 === 0; //true : 유효
 
 }
+
+const goSignIn = () => {
+
+    if(checkInfo.card && checkInfo.cardValid) {
+
+        router.push("/SignIn");
+    }
+}
+
 </script>
 
 <template>
@@ -67,13 +75,13 @@ const calculation = (num: string) => {
         <span>카드번호</span> <br>
         <a-space direction="vertical">
             <a-space direction="horizontal">
-                <a-input v-model:value="cardNo.no1" @change="handleInput"></a-input>
-                <a-input v-model:value="cardNo.no2" @change="handleInput"></a-input>
-                <a-input v-model:value="cardNo.no3" @change="handleInput"></a-input>
-                <a-input v-model:value="cardNo.no4" @change="handleInput"></a-input>
+                <a-input v-model:value="cardInfo.no1" @change="handleInput"></a-input>
+                <a-input v-model:value="cardInfo.no2" @change="handleInput"></a-input>
+                <a-input v-model:value="cardInfo.no3" @change="handleInput"></a-input>
+                <a-input v-model:value="cardInfo.no4" @change="handleInput"></a-input>
             </a-space>
-                <a-input v-if="!(cardNo.valid && cardNo.result) && cardNo.no1" placeholder="유효하지 않은 값입니다." disabled></a-input>
-            <a-button>완료</a-button>
+                <a-input v-if="!(checkInfo.card && checkInfo.cardValid) && cardInfo.no1" placeholder="유효하지 않은 값입니다." disabled></a-input>
+            <a-button @click="goSignIn">다음</a-button>
         </a-space>
        
 
