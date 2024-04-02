@@ -5,5 +5,8 @@ export default defineNuxtConfig({
     '@ant-design-vue/nuxt',
     '@pinia/nuxt'
   ],
+  pinia: {
+    storesDirs: ['./stores/**']
+  },
   antd: {},
 })

@@ -1,10 +1,9 @@
 <script setup lang="ts">
 
+//stores
 import { useUsers } from '@/stores/users'
 const store = useUsers();
 const { userInfo } = store;
-
-
 </script>
 
 <template>

@@ -20,7 +20,7 @@ const handleEmail = () => {
         } 
     } 
 
-    console.log('store email : ' + userInfo.email);
+    // console.log('store email : ' + userInfo.email);
     return checkInfo.email = true;
 }
 
