@@ -8,7 +8,8 @@ router.push('/SignUpInfo');
 </script>
 
 <template>
-    <div>
-
+    <div class="app">
+        <Container>
+        </Container>
     </div>
 </template>

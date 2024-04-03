@@ -12,12 +12,30 @@ const router = useRouter();
 //input Data 검증
 const handleInput = () => {
 
+    inputSlice();
     checkRegex();
     if(checkInfo.card === true) { //input 확인 완료
         
         let num = `${cardInfo.no1}${cardInfo.no2}${cardInfo.no3}${cardInfo.no4}`;
         checkInfo.cardValid = calculation(num);    
     }    
+}
+
+//input slice 
+const inputSlice = () => {
+
+    if(cardInfo.no1.length > 4) {
+        cardInfo.no1 = cardInfo.no1.substring(0, 4);
+    }
+    if(cardInfo.no2.length > 4) {
+        cardInfo.no2 = cardInfo.no2.substring(0, 4);
+    }
+    if(cardInfo.no3.length > 4) {
+        cardInfo.no3 = cardInfo.no3.substring(0, 4);
+    }
+    if(cardInfo.no4.length > 4) {
+        cardInfo.no4 = cardInfo.no4.substring(0, 4);
+    }
 }
 
 //input data 확인
@@ -71,19 +89,42 @@ const goSignIn = () => {
 </script>
 
 <template>
-    <div>
-        <span>카드번호</span> <br>
-        <a-space direction="vertical">
-            <a-space direction="horizontal">
-                <a-input v-model:value="cardInfo.no1" @change="handleInput"></a-input>
-                <a-input v-model:value="cardInfo.no2" @change="handleInput"></a-input>
-                <a-input v-model:value="cardInfo.no3" @change="handleInput"></a-input>
-                <a-input v-model:value="cardInfo.no4" @change="handleInput"></a-input>
+    <Container>
+        <div class="container">
+            <a-space direction="vertical">
+                <span>카드번호</span>
+                <a-space direction="horizontal" class="main">
+                    <a-input v-model:value="cardInfo.no1" @change="handleInput"></a-input>
+                    <a-input v-model:value="cardInfo.no2" @change="handleInput"></a-input>
+                    <a-input v-model:value="cardInfo.no3" @change="handleInput"></a-input>
+                    <a-input v-model:value="cardInfo.no4" @change="handleInput"></a-input>
+                </a-space>
+                <a-input class="error" v-if="!(checkInfo.card && checkInfo.cardValid) && cardInfo.no1" placeholder="유효하지 않은 값입니다." readonly></a-input>
+                <a-button class="btn-footer" @click="goSignIn">다음</a-button>
             </a-space>
-                <a-input v-if="!(checkInfo.card && checkInfo.cardValid) && cardInfo.no1" placeholder="유효하지 않은 값입니다." disabled></a-input>
-            <a-button @click="goSignIn">다음</a-button>
-        </a-space>
-       
-
-    </div>
+        </div>
+    </Container>
 </template>
+
+<style scoped>
+
+.main input {
+    width: 120px;
+    border: 1px solid black;
+    border-radius: 0px;
+
+}
+
+button {
+    margin-top: 500px;
+    background-color: #000000;
+    color: white;
+    min-width: 500px;
+    width: 500px;
+}
+
+.error {
+    color: red;
+}
+
+</style>

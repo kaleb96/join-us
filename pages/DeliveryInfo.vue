@@ -69,28 +69,100 @@ const goNext = () => {
 </script>
 
 <template>
-    <div>
-        <a-space direction="vertical">
-            <div>
-                <span>이름</span>
-                <a-input type="text" v-model:value="userInfo.name" @change="handleName"></a-input>
-                <a-input v-if="(userInfo.name && !checkInfo.name)" placeholder="이름을 다시 확인 해주세요" disabled></a-input>
+    <Container>
+        <div class="container">
+            <div class="main">
+                <a-space direction="vertical">
+                    <div class="input-data">
+                        <span class="title">이름</span>
+                        <a-space direction="vertical">
+                            <a-input type="text" v-model:value="userInfo.name" @change="handleName"></a-input>
+                            <a-input class="error" v-if="(userInfo.name && !checkInfo.name)" placeholder="이름을 다시 확인 해주세요" readonly></a-input>
+                        </a-space>
+                    </div>
+
+                    <div class="input-data">
+                        <span class="title">연락처</span>
+                        <a-space direction="vertical">
+                            <a-input type="text" v-model:value="userInfo.ctn" @change="handleCtn"></a-input>
+                            <a-input class="error" v-if="(userInfo.ctn && !checkInfo.ctn)" placeholder="연락처를 다시 확인 해주세요" readonly></a-input>
+                        </a-space>
+                    </div>
+                    <div class>
+                        <div class="input-data">
+                            <span>주소</span>
+                            <a-button @click="postOpen">우편번호</a-button>
+                        </div>
+                        <div class="post">
+                            <a-input type="text" readonly v-model:value="userInfo.roadAddress"></a-input>
+                            <a-input type="text" readonly v-model:value="userInfo.zoneCode"></a-input>
+                        </div>
+                    </div>   
+                </a-space>
             </div>
-            <div>
-                <span>연락처</span>
-                <a-input type="text" v-model:value="userInfo.ctn" @change="handleCtn"></a-input>
-                <a-input v-if="(userInfo.ctn && !checkInfo.ctn)" placeholder="연락처를 다시 확인 해주세요" disabled></a-input>
-            </div>
-            <div>
-                <span>주소</span>
-                <a-button @click="postOpen">우편번호</a-button>
-                <a-input type="text" readonly v-model:value="userInfo.roadAddress"></a-input>
-                <a-input type="text" readonly v-model:value="userInfo.zoneCode"></a-input>
-            </div>
-            <div>
+            <div class="btn-footer">
                 <a-button><Nuxt-link to='/'>이전</Nuxt-link></a-button>
                 <a-button @click="goNext">다음</a-button>
             </div>
-        </a-space>
-    </div>
+        </div>
+    </Container>
+   
 </template>
+
+<style scoped>
+
+.container {
+
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+} 
+
+.main {
+
+    display: flex;
+    justify-content: center;
+    margin-bottom: 500px;
+}
+
+.btn-footer{
+    display: flex;
+    justify-content: center;
+}
+
+.btn-footer button {
+
+    background-color: #000000;
+    color: white;
+    min-width: 250px;
+    width: 250px;
+}
+
+.input-data {
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.main input {
+    border-radius: 0;
+    border: 1px solid;
+    margin-bottom: 5px;
+}
+
+.post {
+    margin-top: 10px;
+}
+
+.input-data button {
+    
+    background-color: #000000;
+    color: white;
+    min-width: 185px;
+    width: 185px;
+}
+
+.error {
+    color: red;
+}
+</style>
