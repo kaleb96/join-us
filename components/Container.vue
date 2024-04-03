@@ -1,8 +1,15 @@
-<script setup>
+<script setup lang="ts">
+
+const isLoading = ref(false);
+
+setTimeout(()=> {
+    isLoading.value = true;
+}, 2000)
 </script>
 
 <template>
-    <div class="container">
+    <spinner class="spinner" v-if="!isLoading"></spinner>
+    <div class="container" v-else>
         <slot></slot>
     </div>
 </template>
@@ -15,5 +22,13 @@
     justify-content: center;
     margin-top: 50px;
     padding: 0;
+}
+
+.spinner {
+    
+    margin-top: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>

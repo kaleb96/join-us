@@ -99,7 +99,7 @@ const goSignIn = () => {
                     <a-input v-model:value="cardInfo.no3" @change="handleInput"></a-input>
                     <a-input v-model:value="cardInfo.no4" @change="handleInput"></a-input>
                 </a-space>
-                <a-input class="error" v-if="!(checkInfo.card && checkInfo.cardValid) && cardInfo.no1" placeholder="유효하지 않은 값입니다." readonly></a-input>
+                <a-input status="error" v-if="!(checkInfo.card && checkInfo.cardValid) && cardInfo.no1" placeholder="유효하지 않은 값입니다." readonly></a-input>
                 <a-button class="btn-footer" @click="goSignIn">다음</a-button>
             </a-space>
         </div>
@@ -122,9 +122,4 @@ button {
     min-width: 500px;
     width: 500px;
 }
-
-.error {
-    color: red;
-}
-
 </style>
