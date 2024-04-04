@@ -13,6 +13,7 @@ const { userInfo, checkInfo } = store;
 
 //states
 const router = useRouter();
+const checkNext = ref(true);
 
 //functions
 //이름 유효성 검사
@@ -63,8 +64,19 @@ const postOpen = () => {
 const goNext = () => {
 
     if(userInfo.roadAddress && userInfo.zoneCode && checkInfo.name && checkInfo.ctn) {
-        router.push('/PayInfo');
-    }
+        
+        router.push('/payInfo');
+    } 
+
+    checkNext.value = false;
+    setTimeout(() =>{
+        checkNext.value = true;
+    }, 2000)
+}
+
+const goPrev = () => {
+
+    router.push('/signUpInfo');
 }
 </script>
 
@@ -77,7 +89,7 @@ const goNext = () => {
                         <span class="title">이름</span>
                         <a-space direction="vertical">
                             <a-input type="text" v-model:value="userInfo.name" @change="handleName"></a-input>
-                            <a-input class="error" v-if="(userInfo.name && !checkInfo.name)" placeholder="이름을 다시 확인 해주세요" readonly></a-input>
+                            <a-input status="error" v-if="(userInfo.name && !checkInfo.name)" placeholder="이름을 다시 확인 해주세요" readonly></a-input>
                         </a-space>
                     </div>
 
@@ -85,7 +97,7 @@ const goNext = () => {
                         <span class="title">연락처</span>
                         <a-space direction="vertical">
                             <a-input type="text" v-model:value="userInfo.ctn" @change="handleCtn"></a-input>
-                            <a-input class="error" v-if="(userInfo.ctn && !checkInfo.ctn)" placeholder="연락처를 다시 확인 해주세요" readonly></a-input>
+                            <a-input status="error" v-if="(userInfo.ctn && !checkInfo.ctn)" placeholder="연락처를 다시 확인 해주세요" readonly></a-input>
                         </a-space>
                     </div>
                     <div class>
@@ -100,9 +112,15 @@ const goNext = () => {
                     </div>   
                 </a-space>
             </div>
+
             <div class="btn-footer">
-                <a-button><Nuxt-link to='/'>이전</Nuxt-link></a-button>
-                <a-button @click="goNext">다음</a-button>
+                <a-space direction="vertical">
+                    <a-space direction="horizontal" >
+                        <a-button @click="goPrev">이전</a-button>
+                        <a-button @click="goNext">다음</a-button>
+                    </a-space>
+                    <a-input status="error" v-if="!checkNext" placeholder="입력 값을 확인해주세요" readonly></a-input>
+                </a-space>
             </div>
         </div>
     </Container>
@@ -126,6 +144,7 @@ const goNext = () => {
 }
 
 .btn-footer{
+
     display: flex;
     justify-content: center;
 }
@@ -145,12 +164,14 @@ const goNext = () => {
 }
 
 .main input {
+
     border-radius: 0;
     border: 1px solid;
     margin-bottom: 5px;
 }
 
 .post {
+    
     margin-top: 10px;
 }
 
@@ -160,9 +181,5 @@ const goNext = () => {
     color: white;
     min-width: 185px;
     width: 185px;
-}
-
-.error {
-    color: red;
 }
 </style>

@@ -64,7 +64,7 @@ const handleConfirm = () => {
 const handleNext = () => {
 
     if(checkInfo.email && checkInfo.passwd && checkInfo.confirmPasswd) { //모두 일치
-        router.push('/DeliveryInfo');
+        router.push('/postInfo');
 
     } else {
         
@@ -110,7 +110,7 @@ const handleNext = () => {
             </div>
             <div class="btn-footer">
                 <a-space direction="vertical">
-                    <a-button type="primary" @click="handleNext">다음</a-button>
+                    <a-button @click="handleNext">다음</a-button>
                     <a-input status="error" v-if="isNext"  placeholder="입력한 정보를 확인해주세요" readonly></a-input>
                 </a-space>
             </div>

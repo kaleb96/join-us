@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+//state
 const isLoading = ref(false);
 
 setTimeout(()=> {
@@ -8,7 +8,7 @@ setTimeout(()=> {
 </script>
 
 <template>
-    <spinner class="spinner" v-if="!isLoading"></spinner>
+    <Spinner class="spinner" v-if="!isLoading"></Spinner>
     <div class="container" v-else>
         <slot></slot>
     </div>
@@ -16,6 +16,7 @@ setTimeout(()=> {
 
 <style scoped>
 .container {
+    
     width: 100%;
     min-width: 800px;
     display: flex;

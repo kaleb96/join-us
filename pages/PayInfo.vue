@@ -82,7 +82,7 @@ const goSignIn = () => {
 
     if(checkInfo.card && checkInfo.cardValid) {
 
-        router.push("/SignIn");
+        router.push("/signIn");
     }
 }
 
